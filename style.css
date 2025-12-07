@@ -1,3 +1,5 @@
+[file name]: style.css
+[file content begin]
 * {
     margin: 0;
     padding: 0;
@@ -111,6 +113,32 @@ body {
     align-items: center;
     justify-content: center;
     font-weight: bold;
+}
+
+/* Nota de Inspiração no Header */
+.inspiration-note {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.inspiration-note i {
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.inspiration-note p {
+    font-size: 0.9rem;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.95);
 }
 
 /* Resumo Rápido */
@@ -553,6 +581,48 @@ header .subtitle {
     opacity: 0.9;
 }
 
+/* Informações do Perfume */
+.perfume-info {
+    background: #f8f9fa;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.inspiration-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    color: #2575fc;
+    font-weight: 500;
+}
+
+.inspiration-text i {
+    color: #6a11cb;
+}
+
+.concentration-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.concentration-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.concentration-item i {
+    color: #27ae60;
+    font-size: 0.9rem;
+}
+
 .tabs {
     display: flex;
     justify-content: center;
@@ -893,6 +963,11 @@ footer {
     header h1 {
         font-size: 2rem;
     }
+    
+    .inspiration-note {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -926,4 +1001,11 @@ footer {
         width: 100%;
         justify-content: center;
     }
+    
+    .inspiration-note {
+        flex-direction: column;
+        text-align: center;
+        gap: 5px;
+    }
 }
+[file content end]
