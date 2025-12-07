@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selecione seus Perfumes</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧴</text></svg>">
+</head>
+<body>
+    <!-- Barra Superior Fixa -->
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div class="logo">
+                <i class="fas fa-wine-bottle"></i>
+                <span>Craftcare Store</span>
+            </div>
+            <div class="top-bar-actions">
+                <div class="search-box">
+                    <input type="text" id="global-search" placeholder="Buscar perfumes...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <button class="cart-icon-btn" id="cart-toggle">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </button>
+                <button class="home-btn" id="go-home">
+                    <i class="fas fa-home"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carrinho Pop-up -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Seu Carrinho</h3>
+            <button class="close-cart" id="close-cart">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <div class="empty-cart">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Seu carrinho está vazio</p>
+            </div>
+        </div>
+        <div class="cart-total">
+            <p>Total: <span id="cart-total-price">R$ 0,00</span></p>
+            <p><small>*Frete a combinar</small></p>
+        </div>
+        <div class="cart-actions">
+            <button id="cart-send-whatsapp" class="whatsapp-btn">
+                <i class="fab fa-whatsapp"></i> Enviar Pedido
+            </button>
+            <button id="clear-cart" class="clear-btn">
+                <i class="fas fa-trash"></i> Limpar Carrinho
+            </button>
+        </div>
+    </div>
+
+    <!-- Formulário de Entrega Modal -->
+    <div class="modal-overlay" id="delivery-modal-overlay"></div>
+    <div class="modal" id="delivery-modal">
+        <div class="modal-header">
+            <h3><i class="fas fa-truck"></i> Opções de Entrega</h3>
+            <button class="close-modal" id="close-delivery-modal">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="delivery-options">
+                <div class="delivery-option selected" data-type="delivery">
+                    <i class="fas fa-truck"></i>
+                    <h4>Entrega</h4>
+                    <p>Receba seus perfumes em casa</p>
+                </div>
+                <div class="delivery-option" data-type="pickup">
+                    <i class="fas fa-store"></i>
+                    <h4>Retirar no Local</h4>
+                    <p>Retire pessoalmente</p>
+                </div>
+            </div>
+            
+            <div class="address-form" id="address-form">
+                <h4><i class="fas fa-map-marker-alt"></i> Endereço de Entrega</h4>
+                <div class="form-group">
+                    <label for="client-name">Nome Completo *</label>
+                    <input type="text" id="client-name" placeholder="Seu nome completo">
+                </div>
+                <div class="form-group">
+                    <label for="client-phone">Telefone *</label>
+                    <input type="tel" id="client-phone" placeholder="(00) 00000-0000">
+                </div>
+                <div class="form-group">
+                    <label for="client-address">Endereço Completo *</label>
+                    <textarea id="client-address" rows="3" placeholder="Rua, número, bairro, cidade - Estado"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="client-complement">Complemento</label>
+                    <input type="text" id="client-complement" placeholder="Apartamento, bloco, referência...">
+                </div>
+                <p class="form-note">* Campos obrigatórios</p>
+            </div>
+            
+            <div class="pickup-info" id="pickup-info" style="display: none;">
+                <div class="alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    <p>Você optou por retirar no local. O endereço será informado no WhatsApp após o envio do pedido.</p>
+                </div>
+                <div class="form-group">
+                    <label for="pickup-name">Nome para Retirada *</label>
+                    <input type="text" id="pickup-name" placeholder="Seu nome completo">
+                </div>
+                <div class="form-group">
+                    <label for="pickup-phone">Telefone *</label>
+                    <input type="tel" id="pickup-phone" placeholder="(00) 00000-0000">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="save-delivery-info" class="save-btn">
+                <i class="fas fa-save"></i> Salvar Informações
+            </button>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-wine-bottle"></i> Selecione seus Perfumes</h1>
+            <p class="subtitle">Escolha os perfumes que deseja e envie o pedido diretamente para nosso WhatsApp</p>
+        </header>
+
+        <!-- Resumo Rápido do Pedido -->
+        <div class="quick-summary">
+            <div class="quick-summary-content">
+                <div>
+                    <h3><i class="fas fa-shopping-cart"></i> Resumo Rápido</h3>
+                    <p id="quick-items-count">0 itens</p>
+                </div>
+                <div>
+                    <p id="quick-total-price">Total: R$ 0,00</p>
+                    <button class="view-cart-btn" id="quick-view-cart">Ver Carrinho</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="feminino">
+                <i class="fas fa-venus"></i> Femininos (97)
+            </button>
+            <button class="tab-btn" data-tab="masculino">
+                <i class="fas fa-mars"></i> Masculinos (131)
+            </button>
+            <button class="tab-btn" data-tab="body">
+                <i class="fas fa-spray-can"></i> Body Splash (6)
+            </button>
+        </div>
+
+        <div class="filters-bar">
+            <div class="filter-group">
+                <label for="sort-by">Ordenar por:</label>
+                <select id="sort-by">
+                    <option value="name-asc">Nome (A-Z)</option>
+                    <option value="name-desc">Nome (Z-A)</option>
+                    <option value="price-asc">Menor Preço</option>
+                    <option value="price-desc">Maior Preço</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="price-filter">Faixa de Preço:</label>
+                <select id="price-filter">
+                    <option value="all">Todos os preços</option>
+                    <option value="0-100">Até R$ 100</option>
+                    <option value="100-150">R$ 100 - R$ 150</option>
+                    <option value="150-200">R$ 150 - R$ 200</option>
+                    <option value="200+">Acima de R$ 200</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="tab-content active" id="feminino-tab">
+            <div class="filter">
+                <input type="text" id="search-feminino" placeholder="Buscar perfume feminino...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="perfume-grid" id="feminino-grid">
+                <!-- Perfumes femininos serão carregados aqui -->
+            </div>
+        </div>
+
+        <div class="tab-content" id="masculino-tab">
+            <div class="filter">
+                <input type="text" id="search-masculino" placeholder="Buscar perfume masculino...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="perfume-grid" id="masculino-grid">
+                <!-- Perfumes masculinos serão carregados aqui -->
+            </div>
+        </div>
+
+        <div class="tab-content" id="body-tab">
+            <div class="filter">
+                <input type="text" id="search-body" placeholder="Buscar body splash...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="perfume-grid" id="body-grid">
+                <!-- Body splash será carregado aqui -->
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3><i class="fas fa-info-circle"></i> Como funciona:</h3>
+            <ol>
+                <li>Selecione o perfume desejado</li>
+                <li>Escolha a versão (tamanho) que preferir</li>
+                <li>Verifique seu pedido no resumo rápido ou clicando no carrinho</li>
+                <li>Clique no botão verde para enviar direto para o WhatsApp</li>
+                <li>O frete será combinado após o pedido</li>
+            </ol>
+            <div class="contact-info">
+                <p><i class="fab fa-whatsapp"></i> WhatsApp: (19) 99897-8060</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>Sistema de Pedidos de Perfumes &copy; 2024</p>
+            <p class="footer-links">
+                <a href="#" id="delivery-info"><i class="fas fa-truck"></i> Opções de Entrega</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
