@@ -1,3 +1,5 @@
+[file name]: script.js
+[file content begin]
 const perfumesData = {
     feminino: [
         { nome: "212 VIP ROSE", preco100ml: 163, preco30ml: 95, preco50ml: 107 },
@@ -388,8 +390,24 @@ function createPerfumeCard(perfume, genero, index) {
     
     sizeOptionsHTML += '</div>';
     
+    // Informações de inspiração e concentração
+    const perfumeInfoHTML = `
+        <div class="perfume-info">
+            <div class="inspiration-text">
+                <i class="fas fa-star"></i>
+                <span>Inspirado em: ${perfume.nome}</span>
+            </div>
+            <div class="concentration-info">
+                ${tem100ml ? '<div class="concentration-item"><i class="fas fa-flask"></i><span>100ml: 33% Extract Parfum</span></div>' : ''}
+                ${tem30ml ? '<div class="concentration-item"><i class="fas fa-flask"></i><span>30ml: 33% Extract Parfum</span></div>' : ''}
+                ${tem50ml ? '<div class="concentration-item"><i class="fas fa-flask"></i><span>50ml: 20% Colônia</span></div>' : ''}
+            </div>
+        </div>
+    `;
+    
     card.innerHTML = `
         <h3>${perfume.nome}</h3>
+        ${perfumeInfoHTML}
         ${sizeOptionsHTML}
         <button class="add-btn" disabled>
             <i class="fas fa-cart-plus"></i> Adicionar
@@ -459,8 +477,25 @@ function renderBodySplashGrid(genero, items) {
         card.dataset.name = item.nome.toLowerCase();
         card.dataset.minPrice = item.preco;
         
+        // Informações de inspiração e concentração para Body Splash
+        const perfumeInfoHTML = `
+            <div class="perfume-info">
+                <div class="inspiration-text">
+                    <i class="fas fa-star"></i>
+                    <span>Inspirado em: ${item.nome}</span>
+                </div>
+                <div class="concentration-info">
+                    <div class="concentration-item">
+                        <i class="fas fa-flask"></i>
+                        <span>Concentração: 20% Body Splash</span>
+                    </div>
+                </div>
+            </div>
+        `;
+        
         card.innerHTML = `
             <h3>${item.nome}</h3>
+            ${perfumeInfoHTML}
             <div class="size-options">
                 <div class="size-option selected" data-size="Único" data-price="${item.preco}">
                     <label>
@@ -929,6 +964,7 @@ function sendToWhatsApp() {
     }
     
     let message = `*PEDIDO DE PERFUMES*\n\n`;
+    message += `*NOTA:* Todos os perfumes são inspirações das marcas originais, com qualidade premium.\n\n`;
     
     // Agrupar por gênero
     const grupos = {
@@ -1022,3 +1058,4 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+[file content end]
